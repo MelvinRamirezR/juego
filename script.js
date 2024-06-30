@@ -10,17 +10,27 @@ function createBall(color) {
     const ball = document.createElement("div");
     ball.classList.add("ball");
     ball.style.backgroundColor = color;
-    
+
     // Eventos táctiles para dispositivos móviles
     ball.addEventListener("touchstart", touchStart);
+    ball.addEventListener("touchmove", touchMove);
     ball.addEventListener("touchend", touchEnd);
-    
+
     return ball;
 }
 
 function touchStart(event) {
     selectedBall = event.target;
     event.target.style.opacity = '0.5'; // Reducir la opacidad mientras se arrastra en dispositivos móviles
+}
+
+function touchMove(event) {
+    event.preventDefault();
+    if (selectedBall) {
+        const touch = event.touches[0];
+        selectedBall.style.left = touch.pageX - selectedBall.offsetWidth / 2 + 'px';
+        selectedBall.style.top = touch.pageY - selectedBall.offsetHeight / 2 + 'px';
+    }
 }
 
 function touchEnd(event) {
@@ -30,6 +40,8 @@ function touchEnd(event) {
             targetBox.appendChild(selectedBall);
         }
         selectedBall.style.opacity = '1'; // Restaurar la opacidad al soltar en dispositivos móviles
+        selectedBall.style.left = '';
+        selectedBall.style.top = '';
         selectedBall = null;
     }
 }
@@ -78,6 +90,7 @@ function fillBoxes(colors) {
     const allBalls = document.querySelectorAll('.ball');
     allBalls.forEach(ball => {
         ball.addEventListener("touchstart", touchStart);
+        ball.addEventListener("touchmove", touchMove);
         ball.addEventListener("touchend", touchEnd);
     });
 

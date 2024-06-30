@@ -53,10 +53,10 @@ body {
 .container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    grid-gap: 10px;
+    grid-gap: 20px;
     width: 80%;
-    max-width: 800px;
-    margin-bottom: 20px;
+    max-width: 1200px;
+    margin-bottom: 40px;
     background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente para el contenedor */
     padding: 20px;
     border-radius: 10px;
@@ -70,13 +70,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
+    padding: 3px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
 }
 
 .ball {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     margin: 5px;
     cursor: pointer;
