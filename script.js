@@ -40,8 +40,22 @@ function touchEnd(event) {
     event.preventDefault();
     if (draggedBall) {
         draggedBall.style.opacity = '1'; // Restaurar la opacidad al soltar en dispositivos móviles
+        const targetBox = getTargetBox(event.changedTouches[0].pageX, event.changedTouches[0].pageY);
+        if (targetBox) {
+            targetBox.appendChild(draggedBall);
+        }
         draggedBall = null;
     }
+}
+
+function getTargetBox(x, y) {
+    const elements = document.elementsFromPoint(x, y);
+    for (let element of elements) {
+        if (element.classList.contains("box") && !element.hasChildNodes()) {
+            return element;
+        }
+    }
+    return null;
 }
 
 function shuffle(array) {
