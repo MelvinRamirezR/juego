@@ -13,7 +13,35 @@ function createBall(color) {
     ball.draggable = true;
     ball.addEventListener("dragstart", dragStart);
     ball.addEventListener("dragend", dragEnd);
+    
+    // Eventos táctiles para dispositivos móviles
+    ball.addEventListener("touchstart", touchStart);
+    ball.addEventListener("touchmove", touchMove);
+    ball.addEventListener("touchend", touchEnd);
+    
     return ball;
+}
+
+function touchStart(event) {
+    draggedBall = event.target;
+    event.target.style.opacity = '0.5'; // Reducir la opacidad mientras se arrastra en dispositivos móviles
+}
+
+function touchMove(event) {
+    event.preventDefault();
+    if (draggedBall) {
+        const touch = event.touches[0];
+        draggedBall.style.left = touch.pageX - draggedBall.offsetWidth / 2 + 'px';
+        draggedBall.style.top = touch.pageY - draggedBall.offsetHeight / 2 + 'px';
+    }
+}
+
+function touchEnd(event) {
+    event.preventDefault();
+    if (draggedBall) {
+        draggedBall.style.opacity = '1'; // Restaurar la opacidad al soltar en dispositivos móviles
+        draggedBall = null;
+    }
 }
 
 function shuffle(array) {
@@ -61,6 +89,11 @@ function fillBoxes(colors) {
     allBalls.forEach(ball => {
         ball.addEventListener('dragstart', dragStart);
         ball.addEventListener('dragend', dragEnd);
+        
+        // Eventos táctiles para dispositivos móviles
+        ball.addEventListener("touchstart", touchStart);
+        ball.addEventListener("touchmove", touchMove);
+        ball.addEventListener("touchend", touchEnd);
     });
 
     boxes.forEach(box => {
