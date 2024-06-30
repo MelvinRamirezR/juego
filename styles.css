@@ -1,0 +1,95 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #fde7e7; /* Color rosa claro */
+    font-family: 'Comic Sans MS', cursive, sans-serif; /* Fuente estilo caricatura */
+    background-image: url('https://images.unsplash.com/photo-1557885733-6e8a35c4918e'); /* Fondo de pantalla */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente para los controles */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+.controls label {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.controls select {
+    padding: 8px;
+    font-size: 16px;
+}
+
+.controls button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+}
+
+.controls button:hover {
+    background-color: #0056b3; /* Cambio de color al hacer hover */
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-gap: 10px;
+    width: 80%;
+    max-width: 800px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente para el contenedor */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+.box {
+    background-color: #ffffff; /* Color de fondo de las cajas */
+    border: 2px solid #ced4da; /* Borde de las cajas */
+    border-radius: 10px; /* Bordes redondeados */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.ball {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out; /* Transición suave al hacer hover */
+}
+
+.ball:hover {
+    transform: scale(1.2); /* Efecto de escala al hacer hover */
+}
+
+
+
+
+
+
+
