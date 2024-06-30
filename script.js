@@ -4,58 +4,34 @@ const colors8 = ["red", "green", "blue", "yellow", "purple", "orange", "pink", "
 const colors10 = ["red", "green", "blue", "yellow", "purple", "orange", "pink", "brown", "cyan", "lime"];
 const ballsPerBox = 8;
 const emptyBoxes = 2;
-let draggedBall = null;
+let selectedBall = null;
 
 function createBall(color) {
     const ball = document.createElement("div");
     ball.classList.add("ball");
     ball.style.backgroundColor = color;
-    ball.draggable = true;
-    ball.addEventListener("dragstart", dragStart);
-    ball.addEventListener("dragend", dragEnd);
     
     // Eventos táctiles para dispositivos móviles
     ball.addEventListener("touchstart", touchStart);
-    ball.addEventListener("touchmove", touchMove);
     ball.addEventListener("touchend", touchEnd);
     
     return ball;
 }
 
 function touchStart(event) {
-    draggedBall = event.target;
+    selectedBall = event.target;
     event.target.style.opacity = '0.5'; // Reducir la opacidad mientras se arrastra en dispositivos móviles
 }
 
-function touchMove(event) {
-    event.preventDefault();
-    if (draggedBall) {
-        const touch = event.touches[0];
-        draggedBall.style.left = touch.pageX - draggedBall.offsetWidth / 2 + 'px';
-        draggedBall.style.top = touch.pageY - draggedBall.offsetHeight / 2 + 'px';
-    }
-}
-
 function touchEnd(event) {
-    event.preventDefault();
-    if (draggedBall) {
-        draggedBall.style.opacity = '1'; // Restaurar la opacidad al soltar en dispositivos móviles
-        const targetBox = getTargetBox(event.changedTouches[0].pageX, event.changedTouches[0].pageY);
-        if (targetBox) {
-            targetBox.appendChild(draggedBall);
+    if (selectedBall) {
+        const targetBox = event.target.closest(".box");
+        if (targetBox && !targetBox.hasChildNodes()) {
+            targetBox.appendChild(selectedBall);
         }
-        draggedBall = null;
+        selectedBall.style.opacity = '1'; // Restaurar la opacidad al soltar en dispositivos móviles
+        selectedBall = null;
     }
-}
-
-function getTargetBox(x, y) {
-    const elements = document.elementsFromPoint(x, y);
-    for (let element of elements) {
-        if (element.classList.contains("box") && !element.hasChildNodes()) {
-            return element;
-        }
-    }
-    return null;
 }
 
 function shuffle(array) {
@@ -101,40 +77,18 @@ function fillBoxes(colors) {
     // Agregar eventos de arrastre y soltado
     const allBalls = document.querySelectorAll('.ball');
     allBalls.forEach(ball => {
-        ball.addEventListener('dragstart', dragStart);
-        ball.addEventListener('dragend', dragEnd);
-        
-        // Eventos táctiles para dispositivos móviles
         ball.addEventListener("touchstart", touchStart);
-        ball.addEventListener("touchmove", touchMove);
         ball.addEventListener("touchend", touchEnd);
     });
 
     boxes.forEach(box => {
-        box.addEventListener('dragover', allowDrop);
-        box.addEventListener('drop', drop);
+        box.addEventListener('click', () => {
+            if (selectedBall && !box.hasChildNodes()) {
+                box.appendChild(selectedBall);
+                selectedBall = null;
+            }
+        });
     });
-}
-
-function dragStart(event) {
-    draggedBall = event.target;
-    setTimeout(() => event.target.style.display = "none", 0);
-}
-
-function dragEnd(event) {
-    setTimeout(() => event.target.style.display = "block", 0);
-    draggedBall = null;
-}
-
-function allowDrop(event) {
-    event.preventDefault();
-}
-
-function drop(event) {
-    event.preventDefault();
-    if (event.target.classList.contains("box") && draggedBall) {
-        event.target.appendChild(draggedBall);
-    }
 }
 
 document.getElementById("startGame").addEventListener("click", () => {
